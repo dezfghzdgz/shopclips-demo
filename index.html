@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Shopclips – nákupní videa pro e-shopy. Interaktivní ukázka.">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<title>Shopclips ukázka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: dvě kolonky na PC (vlevo telefon s e-shopem, vpravo vysvětlení + co vidí majitel), na mobilu pod sebou a e-shop přes celou šířku */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --ink:#18201b; --muted:#5d6a61; --line:#dbe2dc;
+  --accent:#e2553b; --accent-ink:#ffffff; --brand:#1f4d38; --chip:#e7efe9;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  /* e-shop uvnitř telefonu má vlastní světlý vzhled (je to cizí obchod) */
+  --s-bg:#fbfcfa; --s-ink:#1a231d; --s-muted:#68756c; --s-line:#e3e9e4; --s-green:#1f4d38; --s-coral:#e2553b; --s-tint:#eaf2ec;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121714; --surface:#1a211d; --ink:#e9efea; --muted:#9aa89f; --line:#2b352f;
+  --accent:#ff6e52; --accent-ink:#1a0f0b; --brand:#8fd1ae; --chip:#223029; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121714; --surface:#1a211d; --ink:#e9efea; --muted:#9aa89f; --line:#2b352f;
+  --accent:#ff6e52; --accent-ink:#1a0f0b; --brand:#8fd1ae; --chip:#223029; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:48px;align-items:start}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+/* ---------- telefon ---------- */
+.phone{position:sticky;top:20px;width:100%;max-width:390px;height:780px;border-radius:44px;background:#0d100e;padding:12px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.screen{position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:var(--s-bg);color:var(--s-ink)}
+.shop{height:100%;overflow-y:auto;scrollbar-width:none}
+.shop::-webkit-scrollbar{display:none}
+.s-top{position:sticky;top:0;z-index:3;background:var(--s-bg);display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px;border-bottom:1px solid var(--s-line)}
+.s-logo{font-family:var(--display);font-weight:800;font-size:22px;color:var(--s-green);letter-spacing:-.02em}
+.s-logo small{display:block;font-family:var(--body);font-weight:500;font-size:11px;color:var(--s-muted);letter-spacing:0}
+.cart{position:relative;width:40px;height:40px;border-radius:12px;border:1px solid var(--s-line);display:grid;place-items:center;background:#fff}
+.cart b{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;border-radius:10px;background:var(--s-coral);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 5px;transition:transform .25s}
+.cart b.bump{transform:scale(1.35)}
+.stories{display:flex;gap:12px;overflow-x:auto;padding:14px 16px 6px;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{flex:0 0 auto;width:66px;border:0;background:none;padding:0;cursor:pointer;color:var(--s-ink);font:500 11px/1.3 var(--body);text-align:center}
+.ring{width:64px;height:64px;border-radius:50%;padding:3px;background:conic-gradient(var(--s-coral),#f2a33a,var(--s-green),var(--s-coral));margin-bottom:5px}
+.ring span{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--s-bg);overflow:hidden}
+.story:focus-visible .ring{outline:3px solid var(--s-green);outline-offset:2px}
+.s-hero{margin:12px 16px;border-radius:18px;background:var(--s-green);color:#eaf6ee;padding:18px}
+.s-hero h3{font-size:22px;line-height:1.15;color:#fff}
+.s-hero p{margin:6px 0 0;font-size:13px;opacity:.85}
+.s-sec{padding:6px 16px 4px;font-family:var(--display);font-weight:700;font-size:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 16px 24px}
+.card{border:1px solid var(--s-line);border-radius:16px;background:#fff;overflow:hidden;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.card .thumb{position:relative;aspect-ratio:4/5;max-width:100%}
+.card .play{position:absolute;left:8px;bottom:8px;display:flex;align-items:center;gap:4px;background:rgba(15,20,17,.72);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:99px}
+.card .meta{padding:9px 10px 11px}
+.card .meta div{font-size:13px;font-weight:600;line-height:1.3}
+.card .meta span{font-size:13px;color:var(--s-coral);font-weight:700}
+.card:focus-visible{outline:3px solid var(--s-green);outline-offset:2px}
+.s-foot{padding:8px 16px 28px;font-size:11px;color:var(--s-muted);text-align:center}
+
+/* ---------- feed (svislá videa) ---------- */
+.feed{position:absolute;inset:0;z-index:10;background:#000;display:none}
+.feed.open{display:block;animation:rise .28s ease-out}
+@keyframes rise{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+.track{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.slide{position:relative;height:100%;scroll-snap-align:start;overflow:hidden;color:#fff}
+.slide svg.scene{position:absolute;inset:0;width:100%;height:100%}
+.bars{position:absolute;top:14px;left:14px;right:14px;display:flex;gap:4px;z-index:4}
+.bars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden}
+.bars i b{display:block;height:100%;width:0;background:#fff}
+.fhead{position:absolute;top:26px;left:14px;right:14px;z-index:4;display:flex;align-items:center;justify-content:space-between}
+.who{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.who em{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--s-green);display:grid;place-items:center;font-style:normal;font-family:var(--display);font-weight:800}
+.x{width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.35);color:#fff;cursor:pointer;display:grid;place-items:center}
+.x:focus-visible,.buy:focus-visible,.nav button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.caption{position:absolute;left:14px;right:70px;bottom:132px;z-index:3;font-size:15px;font-weight:600;line-height:1.35;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+.side{position:absolute;right:12px;bottom:140px;z-index:3;display:flex;flex-direction:column;gap:16px;align-items:center;font-size:11px}
+.side span{display:grid;place-items:center;gap:2px;text-align:center}
+.pcard{position:absolute;left:12px;right:12px;bottom:16px;z-index:4;background:rgba(255,255,255,.96);color:var(--s-ink);border-radius:18px;padding:10px;display:flex;gap:10px;align-items:center;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+.pcard .pt{width:56px;height:56px;border-radius:12px;flex:0 0 auto;overflow:hidden}
+.pcard .pi{flex:1;min-width:0}
+.pcard .pi div{font-weight:700;font-size:14px;line-height:1.25}
+.pcard .pi span{font-size:13px;color:var(--s-muted)}
+.pcard .pi strong{color:var(--s-coral)}
+.buy{border:0;border-radius:12px;background:var(--s-coral);color:#fff;font:700 13px var(--body);padding:12px 12px;cursor:pointer;white-space:nowrap}
+.buy.done{background:var(--s-green)}
+.nav{position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:8px}
+.nav button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,0,0,.35);color:#fff;cursor:pointer;font-size:16px}
+.toast{position:absolute;left:50%;top:70px;transform:translate(-50%,-10px);z-index:20;background:#fff;color:var(--s-ink);font-size:13px;font-weight:600;padding:9px 14px;border-radius:99px;box-shadow:0 8px 24px -8px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* animace scén */
+@keyframes grow{0%{transform:scale(.2)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes stripes{to{transform:translateX(-60px)}}
+@keyframes drop{0%{transform:translateY(-40px);opacity:0}15%{opacity:1}100%{transform:translateY(170px);opacity:0}}
+@keyframes lidL{0%,25%{transform:rotate(0)}60%,100%{transform:rotate(-120deg)}}
+@keyframes lidR{0%,25%{transform:rotate(0)}60%,100%{transform:rotate(120deg)}}
+@keyframes popup{0%,45%{transform:translateY(90px)}85%,100%{transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.slide .anim *{animation-play-state:paused}
+.slide.on .anim *{animation-play-state:running}
+
+/* ---------- pravá strana ---------- */
+.intro{display:grid;gap:14px;padding-top:8px}
+.intro h1{font-size:clamp(32px,4.4vw,50px);line-height:1.02;letter-spacing:-.025em;font-weight:800}
+.intro h1 span{color:var(--accent)}
+.intro p{margin:0;max-width:56ch;color:var(--muted);font-size:16px}
+.notice{display:inline-flex;align-items:center;gap:8px;width:fit-content;background:var(--chip);color:var(--brand);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600}
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:30px}
+.feat{border-top:2px solid var(--ink);padding-top:12px}
+.feat h3{font-size:17px;margin-bottom:4px}
+.feat p{margin:0;font-size:14px;color:var(--muted)}
+.try{margin-top:22px;font-size:14px;color:var(--muted)}
+.try b{color:var(--ink)}
+
+.owner{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px}
+.owner-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:16px}
+.owner-head h2{font-size:22px}
+.tag{font-size:12px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--bg);border-radius:14px;padding:12px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-family:var(--display);font-weight:700;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi .d{font-size:12px;color:var(--brand);font-weight:600}
+.kpi.flash .v{color:var(--accent);transition:color .2s}
+.top{margin-top:18px}
+.top h3{font-size:15px;margin-bottom:10px}
+.row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) auto;gap:12px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.row .bar{height:8px;border-radius:4px;background:var(--chip);overflow:hidden}
+.row .bar i{display:block;height:100%;background:var(--brand);border-radius:4px}
+.row b{font-variant-numeric:tabular-nums;font-weight:600}
+.howto{margin-top:40px}
+.howto h2{font-size:22px;margin-bottom:14px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:s}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.step .n{font-family:var(--display);font-weight:800;font-size:28px;color:var(--accent);line-height:1}
+.step h3{font-size:16px;margin:8px 0 4px}
+.step p{margin:0;font-size:14px;color:var(--muted)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:28px}
+  .phone{position:relative;top:0;margin:0 auto;order:2}
+  .right{order:1}
+  .feats,.steps{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:440px){
+  .phone{height:min(760px, calc(100vh - 40px));padding:6px;border-radius:30px}
+  .screen{border-radius:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="phone" aria-label="Ukázka e-shopu v telefonu">
+    <div class="screen">
+      <div class="shop" id="shop">
+        <div class="s-top">
+          <div class="s-logo">Kořen<small>pokojové rostliny</small></div>
+          <div class="cart" aria-label="Košík">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a231d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.5 10h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+            <b id="cartCount">0</b>
+          </div>
+        </div>
+        <div class="stories" id="stories"></div>
+        <div class="s-hero">
+          <h3>Rostliny, které přežijí i vás</h3>
+          <p>Klepněte na kolečko nahoře a podívejte se, jak vypadají doma.</p>
+        </div>
+        <div class="s-sec">Oblíbené</div>
+        <div class="grid" id="grid"></div>
+        <div class="s-foot">Fiktivní e-shop pro ukázku doplňku</div>
+      </div>
+
+      <div class="feed" id="feed" role="dialog" aria-label="Videa e-shopu">
+        <div class="bars" id="bars"></div>
+        <div class="fhead">
+          <div class="who"><em>K</em>koren.cz</div>
+          <button class="x" id="close" aria-label="Zavřít videa">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <div class="nav">
+          <button id="up" aria-label="Předchozí video">↑</button>
+          <button id="down" aria-label="Další video">↓</button>
+        </div>
+        <div class="track" id="track"></div>
+      </div>
+      <div class="toast" id="toast">Přidáno do košíku</div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="intro">
+      <div class="notice">Ukázka · fiktivní e-shop · videa jsou jen animace</div>
+      <h1>Videa, ze kterých se <span>rovnou nakupuje</span></h1>
+      <p>Doplněk pro Shoptet. Na e-shop přidá krátká svislá videa jako na Instagramu. Zákazník video projede a produkt vloží do košíku, aniž by video opustil.</p>
+    </div>
+    <div class="feats">
+      <div class="feat"><h3>Videa jako stories</h3><p>Kolečka nahoře na e-shopu a ▶ u produktů. Na mobilu přes celou obrazovku, swipem na další.</p></div>
+      <div class="feat"><h3>Do košíku z videa</h3><p>Pod každým videem karta produktu s cenou. Jedno klepnutí a je v košíku.</p></div>
+      <div class="feat"><h3>Víte, co vydělávají</h3><p>Zhlédnutí, kliky a tržby z videí. Hned vidíte, které video prodává.</p></div>
+    </div>
+    <p class="try"><b>Vyzkoušejte to:</b> v telefonu vlevo klepněte na kolečko nebo na produkt s ▶ a přidejte něco do košíku. Čísla dole se změní.</p>
+
+    <div class="owner">
+      <div class="owner-head">
+        <h2>Co vidí majitel e-shopu</h2>
+        <span class="tag">Posledních 30 dní · ukázková čísla</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="l">Zhlédnutí videí</div><div class="v" id="kViews">12 480</div><div class="d">+18 % proti minulému měsíci</div></div>
+        <div class="kpi"><div class="l">Klik na produkt</div><div class="v" id="kClicks">1 136</div><div class="d">9,1 % diváků</div></div>
+        <div class="kpi" id="kAddBox"><div class="l">Do košíku z videa</div><div class="v" id="kAdd">402</div><div class="d">z toho 214 objednávek</div></div>
+        <div class="kpi" id="kRevBox"><div class="l">Tržby z videí</div><div class="v" id="kRev">38 720 Kč</div><div class="d">průměr 181 Kč na objednávku</div></div>
+      </div>
+      <div class="top">
+        <h3>Která videa prodávají</h3>
+        <div id="topRows"></div>
+      </div>
+    </div>
+
+    <div class="howto">
+      <h2>Jak se doplněk zapne</h2>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>Nainstalujete</h3><p>V Shoptet Doplňcích klepnete na Objednat. Žádný kód, žádný programátor.</p></div>
+        <div class="step"><div class="n">2</div><h3>Nahrajete videa</h3><p>Klidně ta, co už máte na Instagramu nebo TikToku. U videa vyberete produkty.</p></div>
+        <div class="step"><div class="n">3</div><h3>Videa běží</h3><p>Objeví se na e-shopu samy. Rychle se načítají a e-shop nezpomalí.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const products=[
+  {id:"monstera",name:"Monstera deliciosa",size:"květináč ø 17 cm",price:449,story:"Monstera",caption:"Za 3 týdny nový list. Monstera je nejvděčnější rostlina, kterou můžete mít 🌿",bg:["#1f4d38","#4f8a5b"],scene:"grow",sold:142},
+  {id:"oblak",name:"Květináč Oblak",size:"keramika, ø 14 cm",price:329,story:"Květináče",caption:"Ručně glazovaný. Každý kus je trochu jiný.",bg:["#c96f4a","#f0b38f"],scene:"spin",sold:88},
+  {id:"kapka",name:"Konvička Kapka",size:"0,8 l, matná",price:279,story:"Zalévání",caption:"Úzká hubička = žádná voda na parapetu.",bg:["#2f5f7a","#7fb6c9"],scene:"water",sold:61},
+  {id:"start",name:"Balíček Zelený start",size:"3 rostliny + hnojivo",price:899,story:"Balení",caption:"Takhle k vám dorazí. Zabalené tak, aby nic nespadlo.",bg:["#6a4f8a","#c3a8de"],scene:"box",sold:111}
+];
+const VID_MS=6500;
+let cur=0,timer=null,start=0,raf=null;
+let stats={views:12480,clicks:1136,add:402,rev:38720};
+let cart=0;
+const added=new Set();
+
+function sceneSVG(p){
+  const [a,b]=p.bg;
+  const defs=`<defs><linearGradient id="g-${p.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="390" height="780" fill="url(#g-${p.id})"/>`;
+  const pot=`<path d="M135 520h120l-14 110h-92z" fill="#e8d7c3"/><rect x="128" y="508" width="134" height="20" rx="8" fill="#f3e6d6"/>`;
+  let body="";
+  if(p.scene==="grow"){
+    body=`<g class="anim"><g style="transform-origin:195px 515px;animation:sway 3.2s ease-in-out infinite">
+      ${[[-55,-120,0],[40,-150,.6],[-10,-200,1.2],[70,-90,1.8],[-85,-60,2.4]].map(([x,y,d])=>`<g style="transform-origin:195px 515px;transform-box:view-box;animation:grow 1.4s ${d}s cubic-bezier(.3,1.4,.5,1) both"><path d="M195 515 Q ${195+x*.4} ${515+y*.5} ${195+x} ${515+y}" stroke="#2d6b44" stroke-width="5" fill="none"/><ellipse cx="${195+x}" cy="${515+y}" rx="44" ry="30" fill="#3f9a5f" transform="rotate(${x*.5} ${195+x} ${515+y})"/><path d="M${195+x-30} ${515+y} h60" stroke="#2d6b44" stroke-width="3"/></g>`).join("")}
+    </g></g>${pot}`;
+  }else if(p.scene==="spin"){
+    body=`<g class="anim"><g style="animation:float 3s ease-in-out infinite"><clipPath id="cp-o"><path d="M120 330h150l-18 210h-114z"/></clipPath>
+      <path d="M120 330h150l-18 210h-114z" fill="#f6efe6"/>
+      <g clip-path="url(#cp-o)"><g style="animation:stripes 1.6s linear infinite">${Array.from({length:8},(_,i)=>`<rect x="${100+i*30}" y="330" width="14" height="210" fill="#e3a47f" opacity=".7"/>`).join("")}</g></g>
+      <rect x="112" y="316" width="166" height="22" rx="9" fill="#fff"/></g>
+      <ellipse cx="195" cy="600" rx="90" ry="12" fill="rgba(0,0,0,.18)"/></g>`;
+  }else if(p.scene==="water"){
+    body=`<g class="anim"><g style="animation:float 3s ease-in-out infinite"><path d="M110 250h110v90a20 20 0 0 1-20 20h-70a20 20 0 0 1-20-20z" fill="#eef4f6"/><path d="M220 270 L300 230 L306 240 L226 288z" fill="#eef4f6"/><path d="M110 270 q-30 25 0 55" stroke="#eef4f6" stroke-width="10" fill="none"/></g>
+      ${[0,.4,.8,1.2,1.6].map((d,i)=>`<circle cx="${300+(i%2)*6}" cy="270" r="5" fill="#cfe9f2" style="animation:drop 2s ${d}s linear infinite"/>`).join("")}
+      <g transform="translate(70 -40)"><g style="transform-origin:195px 515px"><ellipse cx="195" cy="455" rx="40" ry="26" fill="#3f9a5f"/><ellipse cx="160" cy="480" rx="30" ry="20" fill="#56ad72"/></g>${pot}</g></g>`;
+  }else{
+    body=`<g class="anim"><g style="animation:popup 3.5s ease-out infinite alternate"><ellipse cx="170" cy="380" rx="34" ry="22" fill="#3f9a5f"/><ellipse cx="220" cy="370" rx="30" ry="20" fill="#56ad72"/><ellipse cx="196" cy="350" rx="26" ry="18" fill="#2d8a50"/></g>
+      <rect x="95" y="420" width="200" height="150" rx="6" fill="#d9b88f"/><rect x="95" y="420" width="200" height="22" fill="#c9a274"/>
+      <rect x="95" y="410" width="100" height="16" fill="#e2c49c" style="transform-origin:95px 418px;transform-box:view-box;animation:lidL 3.5s ease-out infinite alternate"/>
+      <rect x="195" y="410" width="100" height="16" fill="#e2c49c" style="transform-origin:295px 418px;transform-box:view-box;animation:lidR 3.5s ease-out infinite alternate"/>
+      <text x="195" y="515" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="28" fill="#7a5a36">Kořen</text></g>`;
+  }
+  return `<svg class="scene" viewBox="0 0 390 780" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${defs}${body}</svg>`;
+}
+function miniThumb(p){
+  return `<div style="width:100%;height:100%;background:linear-gradient(${p.bg[0]},${p.bg[1]})">${sceneSVG(p).replace('class="scene"','style="width:100%;height:100%"').replace(/id="g-/g,'id="m'+p.id+'-').replace(/url\(#g-/g,'url(#m'+p.id+'-')}</div>`;
+}
+const fmt=n=>n.toLocaleString("cs-CZ");
+
+// obchod
+document.getElementById("stories").innerHTML=
+  `<button class="story" data-i="0"><div class="ring"><span>${miniThumb({...products[0],id:"s0"})}</span></div>Novinky</button>`+
+  products.map((p,i)=>`<button class="story" data-i="${i}"><div class="ring"><span>${miniThumb({...p,id:"s"+(i+1)})}</span></div>${p.story}</button>`).join("");
+document.getElementById("grid").innerHTML=products.map((p,i)=>`
+  <button class="card" data-i="${i}"><div class="thumb">${miniThumb({...p,id:"c"+i})}<div class="play"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#fff"/></svg>video</div></div>
+  <div class="meta"><div>${p.name}</div><span>${fmt(p.price)} Kč</span></div></button>`).join("");
+
+// feed
+const track=document.getElementById("track"),feed=document.getElementById("feed"),bars=document.getElementById("bars");
+track.innerHTML=products.map((p,i)=>`
+  <div class="slide" data-i="${i}">${sceneSVG(p)}
+    <div class="caption">${p.caption}</div>
+    <div class="side">
+      <span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>${[312,187,96,240][i]}</span>
+      <span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 12l16-8-6 16-3-6z"/></svg>Sdílet</span>
+    </div>
+    <div class="pcard"><div class="pt">${miniThumb({...p,id:"p"+i})}</div>
+      <div class="pi"><div>${p.name}</div><span>${p.size} · <strong>${fmt(p.price)} Kč</strong></span></div>
+      <button class="buy" data-i="${i}">Do košíku</button></div>
+  </div>`).join("");
+bars.innerHTML=products.map(()=>"<i><b></b></i>").join("");
+
+function setBars(){
+  [...bars.children].forEach((el,i)=>{el.firstChild.style.width=i<cur?"100%":"0"});
+}
+function tick(){
+  const pct=Math.min(1,(performance.now()-start)/VID_MS);
+  bars.children[cur].firstChild.style.width=(pct*100)+"%";
+  if(pct>=1){ if(cur<products.length-1) go(cur+1); else close(); return; }
+  raf=requestAnimationFrame(tick);
+}
+function activate(i){
+  cur=i; setBars();
+  [...track.children].forEach((s,j)=>s.classList.toggle("on",j===i));
+  cancelAnimationFrame(raf); start=performance.now(); raf=requestAnimationFrame(tick);
+  stats.views+=1; render();
+}
+function go(i){ track.children[i].scrollIntoView({behavior:"smooth"}); }
+function openFeed(i){
+  feed.classList.add("open");
+  track.scrollTop=track.clientHeight*i;
+  activate(i);
+  document.getElementById("close").focus({preventScroll:true});
+}
+function close(){ feed.classList.remove("open"); cancelAnimationFrame(raf); [...track.children].forEach(s=>s.classList.remove("on")); }
+let st;
+track.addEventListener("scroll",()=>{clearTimeout(st);st=setTimeout(()=>{
+  const i=Math.round(track.scrollTop/track.clientHeight);
+  if(feed.classList.contains("open")&&i!==cur) activate(i);
+},90)});
+document.getElementById("close").onclick=close;
+document.getElementById("up").onclick=()=>cur>0&&go(cur-1);
+document.getElementById("down").onclick=()=>cur<products.length-1?go(cur+1):close();
+document.querySelectorAll(".story,.card").forEach(b=>b.addEventListener("click",()=>{
+  const i=+b.dataset.i; if(b.classList.contains("card")){stats.clicks+=1;} openFeed(i);
+}));
+feed.addEventListener("keydown",e=>{
+  if(e.key==="Escape")close();
+  if(e.key==="ArrowDown"){e.preventDefault();document.getElementById("down").click()}
+  if(e.key==="ArrowUp"){e.preventDefault();document.getElementById("up").click()}
+});
+track.addEventListener("click",e=>{
+  const b=e.target.closest(".buy"); if(!b) return;
+  const p=products[+b.dataset.i];
+  cart+=1; const c=document.getElementById("cartCount"); c.textContent=cart; c.classList.add("bump"); setTimeout(()=>c.classList.remove("bump"),250);
+  b.textContent="V košíku ✓"; b.classList.add("done");
+  stats.clicks+=1; stats.add+=1; stats.rev+=p.price; p.sold+=1;
+  render(true);
+  const t=document.getElementById("toast"); t.textContent=`${p.name} je v košíku`; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1600);
+});
+
+function render(flash){
+  document.getElementById("kViews").textContent=fmt(stats.views);
+  document.getElementById("kClicks").textContent=fmt(stats.clicks);
+  document.getElementById("kAdd").textContent=fmt(stats.add);
+  document.getElementById("kRev").textContent=fmt(stats.rev)+" Kč";
+  if(flash){["kAddBox","kRevBox"].forEach(id=>{const el=document.getElementById(id);el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),900)})}
+  const max=Math.max(...products.map(p=>p.sold));
+  document.getElementById("topRows").innerHTML=[...products].sort((a,b)=>b.sold-a.sold).map(p=>`
+    <div class="row"><span>${p.name}</span><div class="bar"><i style="width:${p.sold/max*100}%"></i></div><b>${fmt(p.sold)}× do košíku</b></div>`).join("");
+}
+render();
+</script>
+
+</body>
+</html>
